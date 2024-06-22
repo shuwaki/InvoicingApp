@@ -9,18 +9,16 @@ namespace LifelineGlobalInvoicingApp
     public partial class Homepage : Form
     {
         Invoice Invoice { get; set; }
+        CompanyInfo CompanyInfo { get; set; }
         bool newpage = true;
         int mPageNumber = 1;
         int serialno = 1;
         public Homepage()
         {
             InitializeComponent();
-            CompanyNameLabel.Text = CompanyInfo.CompanyName;
-            CompanyAddressLabel.Text = CompanyInfo.CompanyAddress;
-            CompanyPhoneLabel.Text = CompanyInfo.CompanyPhone;
-            PaymentInfoTextBox.Lines = CompanyInfo.PaymentInfo;
-            ServicesTextBox.Lines = CompanyInfo.Services;
+            
             Invoice = new(new(""));
+            CompanyInfo = new();
             ItemsDataGridView.DataSource = Invoice.Items;
             ItemsDataGridView.Columns[1].FillWeight = 200;
             ItemsDataGridView.Columns[0].FillWeight = 50;
@@ -34,14 +32,27 @@ namespace LifelineGlobalInvoicingApp
             SubtotalTextBox.DataBindings.Add("Text", Invoice, "Subtotal");
             DiscountTextBox.DataBindings.Add("Text", Invoice, "Discount");
             TotalTextBox.DataBindings.Add("Text", Invoice, "Total");
+            CompanyNameTextBox.DataBindings.Add("Text", CompanyInfo, "CompanyName");
+            CompanyAddressTextBox.DataBindings.Add("Text", CompanyInfo, "CompanyAddress");
+            CompanyPhoneTextBox.DataBindings.Add("Text", CompanyInfo, "CompanyPhone");
+            CompanyEmailTextBox.DataBindings.Add("Text", CompanyInfo, "CompanyEmail");
+            PaymentInfoTextBox.DataBindings.Add("Lines", CompanyInfo, "PaymentInfo");
+            ServicesTextBox.DataBindings.Add("Lines", CompanyInfo, "Services");
 
             if (File.Exists("invoiceNumber.txt"))
             {
-                string fileContent = File.ReadAllText("invoiceNumber.txt");
-                if (int.TryParse(fileContent, out int s))
+                var fileContent = File.ReadLines("invoiceNumber.txt").ToArray();
+                if (int.TryParse(fileContent[0], out int s))
                     Invoice.SetNumber(s);
+                CompanyInfo.CompanyName = fileContent[1];
+                CompanyInfo.CompanyAddress = fileContent[2];
+                CompanyInfo.CompanyEmail = fileContent[3];
+                CompanyInfo.CompanyPhone = fileContent[4];
+                CompanyInfo.PaymentInfo = fileContent[5].Split(';');
+                CompanyInfo.Services = fileContent[6].Split(';');
             }
-
+            
+           
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -332,7 +343,18 @@ namespace LifelineGlobalInvoicingApp
         private void PrintDocument1_EndPrint(object sender, PrintEventArgs e)
         {
             string filePath = "invoiceNumber.txt";
-            File.WriteAllText(filePath, Invoice.RaiseNumber().ToString());
+            var x = Invoice.RaiseNumber().ToString() + Environment.NewLine +
+                CompanyInfo.CompanyName + Environment.NewLine +
+                CompanyInfo.CompanyAddress + Environment.NewLine +
+                CompanyInfo.CompanyEmail + Environment.NewLine +
+                CompanyInfo.CompanyPhone + Environment.NewLine;
+
+            for (int i = 0; i < CompanyInfo.PaymentInfo.Length; i++) x += (CompanyInfo.PaymentInfo[i] + ";");
+            x += Environment.NewLine;
+            for (int i = 0; i < CompanyInfo.Services.Length; i++) x += (CompanyInfo.Services[i] + ";");
+
+            File.WriteAllText(filePath, x);
+            //File.WriteAllText(filePath, Invoice.RaiseNumber().ToString());
         }
 
         private void ExportButton_Click(object sender, EventArgs e)

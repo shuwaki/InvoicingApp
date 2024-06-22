@@ -39,10 +39,10 @@
             PrintButton = new Button();
             ExportButton = new Button();
             panel3 = new Panel();
-            CompanyEmailLabel = new Label();
-            CompanyAddressLabel = new Label();
-            CompanyPhoneLabel = new Label();
-            CompanyNameLabel = new Label();
+            CompanyEmailTextBox = new TextBox();
+            CompanyAddressTextBox = new TextBox();
+            CompanyPhoneTextBox = new TextBox();
+            CompanyNameTextBox = new TextBox();
             panel4 = new Panel();
             label19 = new Label();
             label18 = new Label();
@@ -59,6 +59,7 @@
             CustomerAddressTextBox = new TextBox();
             CustomerNameTextBox = new TextBox();
             ItemsDataGridView = new DataGridView();
+            RemoveColumn = new DataGridViewButtonColumn();
             panel5 = new Panel();
             label5 = new Label();
             PaymentInfoTextBox = new TextBox();
@@ -77,7 +78,6 @@
             PrintDocument1 = new System.Drawing.Printing.PrintDocument();
             PrintDialog1 = new PrintDialog();
             PrintPreviewDialog1 = new PrintPreviewDialog();
-            RemoveColumn = new DataGridViewButtonColumn();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -125,7 +125,7 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 9;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 86F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
@@ -184,49 +184,53 @@
             // 
             panel3.BackColor = Color.Silver;
             tableLayoutPanel2.SetColumnSpan(panel3, 3);
-            panel3.Controls.Add(CompanyEmailLabel);
-            panel3.Controls.Add(CompanyAddressLabel);
-            panel3.Controls.Add(CompanyPhoneLabel);
-            panel3.Controls.Add(CompanyNameLabel);
+            panel3.Controls.Add(CompanyEmailTextBox);
+            panel3.Controls.Add(CompanyAddressTextBox);
+            panel3.Controls.Add(CompanyPhoneTextBox);
+            panel3.Controls.Add(CompanyNameTextBox);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(3, 10);
             panel3.Margin = new Padding(3, 0, 3, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(602, 60);
+            panel3.Size = new Size(602, 80);
             panel3.TabIndex = 3;
             // 
-            // CompanyEmailLabel
+            // CompanyEmailTextBox
             // 
-            CompanyEmailLabel.AutoSize = true;
-            CompanyEmailLabel.Location = new Point(300, 34);
-            CompanyEmailLabel.Name = "CompanyEmailLabel";
-            CompanyEmailLabel.Size = new Size(0, 15);
-            CompanyEmailLabel.TabIndex = 4;
+            CompanyEmailTextBox.BackColor = Color.Silver;
+            CompanyEmailTextBox.BorderStyle = BorderStyle.None;
+            CompanyEmailTextBox.Location = new Point(312, 54);
+            CompanyEmailTextBox.Name = "CompanyEmailTextBox";
+            CompanyEmailTextBox.Size = new Size(287, 16);
+            CompanyEmailTextBox.TabIndex = 4;
             // 
-            // CompanyAddressLabel
+            // CompanyAddressTextBox
             // 
-            CompanyAddressLabel.AutoSize = true;
-            CompanyAddressLabel.Location = new Point(300, 4);
-            CompanyAddressLabel.Name = "CompanyAddressLabel";
-            CompanyAddressLabel.Size = new Size(0, 15);
-            CompanyAddressLabel.TabIndex = 3;
+            CompanyAddressTextBox.BackColor = Color.Silver;
+            CompanyAddressTextBox.BorderStyle = BorderStyle.None;
+            CompanyAddressTextBox.Location = new Point(312, 4);
+            CompanyAddressTextBox.Name = "CompanyAddressTextBox";
+            CompanyAddressTextBox.Size = new Size(287, 16);
+            CompanyAddressTextBox.TabIndex = 3;
             // 
-            // CompanyPhoneLabel
+            // CompanyPhoneTextBox
             // 
-            CompanyPhoneLabel.AutoSize = true;
-            CompanyPhoneLabel.Location = new Point(300, 19);
-            CompanyPhoneLabel.Name = "CompanyPhoneLabel";
-            CompanyPhoneLabel.Size = new Size(0, 15);
-            CompanyPhoneLabel.TabIndex = 2;
+            CompanyPhoneTextBox.BackColor = Color.Silver;
+            CompanyPhoneTextBox.BorderStyle = BorderStyle.None;
+            CompanyPhoneTextBox.Location = new Point(312, 29);
+            CompanyPhoneTextBox.Name = "CompanyPhoneTextBox";
+            CompanyPhoneTextBox.Size = new Size(287, 16);
+            CompanyPhoneTextBox.TabIndex = 2;
             // 
-            // CompanyNameLabel
+            // CompanyNameTextBox
             // 
-            CompanyNameLabel.AutoSize = true;
-            CompanyNameLabel.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            CompanyNameLabel.Location = new Point(3, 5);
-            CompanyNameLabel.Name = "CompanyNameLabel";
-            CompanyNameLabel.Size = new Size(0, 17);
-            CompanyNameLabel.TabIndex = 1;
+            CompanyNameTextBox.BackColor = Color.Silver;
+            CompanyNameTextBox.BorderStyle = BorderStyle.None;
+            CompanyNameTextBox.Font = new Font("Showcard Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            CompanyNameTextBox.Location = new Point(3, 5);
+            CompanyNameTextBox.Name = "CompanyNameTextBox";
+            CompanyNameTextBox.Size = new Size(303, 17);
+            CompanyNameTextBox.TabIndex = 1;
             // 
             // panel4
             // 
@@ -247,7 +251,7 @@
             panel4.Controls.Add(CustomerAddressTextBox);
             panel4.Controls.Add(CustomerNameTextBox);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(3, 70);
+            panel4.Location = new Point(3, 90);
             panel4.Margin = new Padding(3, 0, 3, 0);
             panel4.Name = "panel4";
             panel4.Size = new Size(602, 86);
@@ -408,14 +412,23 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             ItemsDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             ItemsDataGridView.Dock = DockStyle.Fill;
-            ItemsDataGridView.Location = new Point(3, 156);
+            ItemsDataGridView.Location = new Point(3, 176);
             ItemsDataGridView.Margin = new Padding(3, 0, 3, 0);
             ItemsDataGridView.Name = "ItemsDataGridView";
             ItemsDataGridView.RowHeadersVisible = false;
             ItemsDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            ItemsDataGridView.Size = new Size(602, 261);
+            ItemsDataGridView.Size = new Size(602, 241);
             ItemsDataGridView.TabIndex = 5;
             ItemsDataGridView.CellContentClick += ItemsDataGridView_CellContentClick;
+            // 
+            // RemoveColumn
+            // 
+            RemoveColumn.FillWeight = 50F;
+            RemoveColumn.HeaderText = "Remove";
+            RemoveColumn.Name = "RemoveColumn";
+            RemoveColumn.Text = "Remove";
+            RemoveColumn.ToolTipText = "Remove";
+            RemoveColumn.UseColumnTextForButtonValue = true;
             // 
             // panel5
             // 
@@ -589,15 +602,6 @@
             PrintPreviewDialog1.Name = "PrintPreviewDialog1";
             PrintPreviewDialog1.Visible = false;
             // 
-            // RemoveColumn
-            // 
-            RemoveColumn.FillWeight = 50F;
-            RemoveColumn.HeaderText = "Remove";
-            RemoveColumn.Name = "RemoveColumn";
-            RemoveColumn.Text = "Remove";
-            RemoveColumn.ToolTipText = "Remove";
-            RemoveColumn.UseColumnTextForButtonValue = true;
-            // 
             // Homepage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -648,10 +652,10 @@
         private TextBox CustomerAddressTextBox;
         private TextBox CustomerNameTextBox;
         private Panel panel7;
-        private Label CompanyEmailLabel;
-        private Label CompanyAddressLabel;
-        private Label CompanyPhoneLabel;
-        private Label CompanyNameLabel;
+        private TextBox CompanyEmailTextBox;
+        private TextBox CompanyAddressTextBox;
+        private TextBox CompanyPhoneTextBox;
+        private TextBox CompanyNameTextBox;
         private TextBox TotalTextBox;
         private TextBox SubtotalTextBox;
         private TextBox DiscountTextBox;
